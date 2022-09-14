@@ -1,0 +1,40 @@
+USE [RestaurantDB]
+GO
+
+/****** Object:  Table [dbo].[RestaurantMenuItem]    Script Date: 13-09-2022 22:49:08 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[RestaurantMenuItem](
+	[MenuItemID] [int] IDENTITY(1,1) NOT NULL,
+	[CuisineID] [int] NOT NULL,
+	[ItemName] [nvarchar](100) NOT NULL,
+	[ItemPrice] [float] NULL,
+ CONSTRAINT [PK_MenuItemID] PRIMARY KEY CLUSTERED 
+(
+	[MenuItemID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+ CONSTRAINT [UK_ItemName] UNIQUE NONCLUSTERED 
+(
+	[ItemName] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[RestaurantMenuItem]  WITH CHECK ADD  CONSTRAINT [FK_CuisineID] FOREIGN KEY([CuisineID])
+REFERENCES [dbo].[Cuisine] ([CuisineID])
+GO
+
+ALTER TABLE [dbo].[RestaurantMenuItem] CHECK CONSTRAINT [FK_CuisineID]
+GO
+
+ALTER TABLE [dbo].[RestaurantMenuItem]  WITH CHECK ADD  CONSTRAINT [Check_ItemPrice] CHECK  (([ItemPrice]>(0)))
+GO
+
+ALTER TABLE [dbo].[RestaurantMenuItem] CHECK CONSTRAINT [Check_ItemPrice]
+GO
+
+
